@@ -11,7 +11,7 @@ public class Generator : MonoBehaviour
     {
         for (var j = 0; j < loops; j++)
         {
-            float radius = 1.5f * j;
+            float radius = 2f * j;
 
             int circumference = (int)(2 * Mathf.PI * radius);
 

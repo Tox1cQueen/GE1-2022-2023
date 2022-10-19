@@ -10,7 +10,12 @@ public class AITank : MonoBehaviour {
     public int current = 0;
     List<Vector3> waypoints = new List<Vector3>();
     public float speed = 10;
-    public Transform player;    
+    public Transform player;
+
+    [SerializeField] Transform[] Positions;
+    [SerializeField] float Speed;
+    int NextPosIndex;
+    Transform NextPos;
 
     public void OnDrawGizmos()
     {
@@ -32,6 +37,11 @@ public class AITank : MonoBehaviour {
         // Add them to the waypoints List
     }
 
+    void Start()
+    {
+        NextPos = Positions[0];
+    }
+
     // Update is called once per frame
     void Update () {
         // Task 3
@@ -44,6 +54,25 @@ public class AITank : MonoBehaviour {
         // Task 5
         // Put code here to calculate if the player is inside the field of view and in range
         // You can print stuff to the screen using:
+        MoveGameObject();
+
         GameManager.Log("Hello from th AI tank");
+    }
+
+    void MoveGameObject()
+    {
+        if (transform.position == NextPos.position)
+        {
+                NextPosIndex++;
+                if (NextPosIndex >= Positions.Length)
+                {
+                    NextPosIndex = 0;
+                }
+               NextPos = Positions[NextPosIndex];
+        }
+        else
+        {
+            transform.position = Vector3.MoveTowards(transform.position, NextPos, Speed * Time.deltaTime);
+        }
     }
 }
